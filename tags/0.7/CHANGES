@@ -1,0 +1,12 @@
+0.7 (released july 8, 2001)
+ * fixed error handling when num couldn't be opened
+ * use first article to figure out group creation date
+ * be more careful in parsing In-Reply-To header to create References
+ * make sure generated message-id is used in xover
+ * rewrite From headers to be compliant with rfc 1036
+ * added command-line option to rebuild databases
+ * fix bug that caused duplicate references headers to be sent
+
+
+0.6 (released july 7, 2001)
+ * initial release
