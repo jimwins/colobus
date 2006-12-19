@@ -1,3 +1,7 @@
+?.? (not released yet)
+ * tweak table structure to improve performance of imports and threading
+   (patch from Robert Spier)
+
 2.1 (released september 4, 2004)
  * optimized use of database for overview information
 

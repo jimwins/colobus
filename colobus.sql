@@ -30,6 +30,7 @@ CREATE TABLE header (
   KEY fromhash (fromhash),
   KEY grp (grp,received),
   KEY grp_2 (grp,thread,parent),
-  KEY grp_3 (grp,subjhash)
+  KEY grp_3 (grp,subjhash),
+  KEY subjhash (subjhash,received)
 ) TYPE=MyISAM DELAY_KEY_WRITE=1;
 
