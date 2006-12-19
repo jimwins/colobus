@@ -1,3 +1,11 @@
+1.1 (released february 20, 20020)
+ * added logging in a format similar to the apache httpd log format
+ * added support for 'xpath' command
+ * added support for forcing a 'Followup-To' header on postings in
+   a specific group
+ * fixed bug handling GMT and UTC format dates in 'newgroups' command
+
+
 1.0 (released september 18, 2001)
  * fixed response to 'list overview.fmt'
  * generate and store 'Lines' header
