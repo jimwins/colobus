@@ -1,0 +1,14 @@
+* thanks to aint (from #php on irc.php.net) for helping to debug a
+  problem with outlook express
+* thanks to Thomas Schöfbeck for helping to debug problems with
+  netscape 4.x
+* thanks to Christian Stocker for helping to debug problems with
+  leafnode
+* thanks to ask (ask@perl.org) for various cleanups, the initial
+  patch to use Mail::Address to clean up From: headers, the addition
+  of 'include' to the config language, and the patch to make the
+  update status pretty
+* thanks to russ allbery for pointing out a bug in the response to the
+  'help' command
+* thanks to simon fraser (via chris nandor) for pointing out a bug in
+  the response to the 'list overview.fmt' command
