@@ -1,3 +1,10 @@
+1.0 (released september 18, 2001)
+ * fixed response to 'list overview.fmt'
+ * generate and store 'Lines' header
+ * fix escaping of leading dots in lines when sending articles
+ * allow header names in any case in 'xhdr' and 'xpat' commands
+
+
 0.8 (released july 10, 2001)
  * added 'xhdr' (and 'xpat' and 'xrover') command support (required by leafnode)
  * moved configuration into a configuration file
