@@ -1,0 +1,55 @@
+2.1 (released september 4, 2004)
+ * optimized use of database for overview information
+
+
+2.0 (released may 15, 2004)
+ * switched to DBI backend (only tested with mysql)
+ * split code for updating overview database from server
+ * allow location of configuration file to be specified
+
+
+1.2 (released march 24, 2004)
+ * change process name to show connecting IP address
+ * reject cancel messages (patch from ask)
+ * fixed bug in sending messages that had no body
+ * minor tweaks to error reporting and tracing
+
+
+1.1 (released february 20, 2002)
+ * added logging in a format similar to the apache httpd log format
+ * added support for 'xpath' command
+ * added support for forcing a 'Followup-To' header on postings in
+   a specific group
+ * fixed bug handling GMT and UTC format dates in 'newgroups' command
+
+
+1.0 (released september 18, 2001)
+ * fixed response to 'list overview.fmt'
+ * generate and store 'Lines' header
+ * fix escaping of leading dots in lines when sending articles
+ * allow header names in any case in 'xhdr' and 'xpat' commands
+
+
+0.8 (released july 10, 2001)
+ * added 'xhdr' (and 'xpat' and 'xrover') command support (required by leafnode)
+ * moved configuration into a configuration file
+ * implemented the 'newgroups' command
+ * added 'ihave' command support
+ * rewrite Message-ID headers to always have correct case
+ * fixed output of the 'help' command
+ * made the progress indicator for database updating prettier
+ * some general code cleanup
+
+
+0.7 (released july 8, 2001)
+ * fixed error handling when num couldn't be opened
+ * use first article to figure out group creation date
+ * be more careful in parsing In-Reply-To header to create References
+ * make sure generated message-id is used in xover
+ * rewrite From headers to be compliant with rfc 1036
+ * added command-line option to rebuild databases
+ * fix bug that caused duplicate references headers to be sent
+
+
+0.6 (released july 7, 2001)
+ * initial release
