@@ -1,4 +1,11 @@
-1.1 (released february 20, 20020)
+1.2 (released march 24, 2004)
+ * change process name to show connecting IP address
+ * reject cancel messages (patch from ask)
+ * fixed bug in sending messages that had no body
+ * minor tweaks to error reporting and tracing
+
+
+1.1 (released february 20, 2002)
  * added logging in a format similar to the apache httpd log format
  * added support for 'xpath' command
  * added support for forcing a 'Followup-To' header on postings in
