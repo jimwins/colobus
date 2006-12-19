@@ -1,3 +1,9 @@
+2.0 (released may 15, 2004)
+ * switched to DBI backend (only tested with mysql)
+ * split code for updating overview database from server
+ * allow location of configuration file to be specified
+
+
 1.2 (released march 24, 2004)
  * change process name to show connecting IP address
  * reject cancel messages (patch from ask)
