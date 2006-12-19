@@ -1,0 +1,58 @@
+# servername is used in some of the server's output
+servername => example.com
+
+# timeout is in seconds
+timeout => 300
+
+# disallow specific nntp commands
+disallow => ihave,xindex
+
+# dsn for connecting to database
+dsn => DBI:mysql:database=colobus;host=localhost
+dbuser => colobus
+dbpass => colobus
+
+# newsgroups
+#
+# the fields used are:
+#  - num = the number of the newsgroup (must be unique)
+#  - path = path to ezmlm directory for the mailing list corresponding
+#    to this newsgroup (only num and archive/ need to be readable)
+#  - mail = mail address to send posts to (leave out to disallow posting)
+#  - desc = description to show for this newsgroup
+#  - first = first post in group (in case your archive doesn't start at 1)
+#  - moderated = moderated group (some newsreaders display this specially)
+#  - recommend = recommend this group to new subscribers (not many
+#    clients pay attention to this information)
+#  - hidden = don't show in listings
+
+group example.announce {
+  num => 1
+  path => /path/to/ezmlm/announce
+  mail => announce@example.com
+  desc => Announcements
+  moderated
+  recommend
+}
+
+group example.general {
+  num => 2
+  path => /path/to/ezmlm/general
+  mail => general@example.com
+  desc => General discussion
+}
+
+group example.cvs {
+  num => 3
+  path => /path/to/ezmlm/cvs
+  desc => Automated mailings from commits to the CVS repository
+  followup => example.general
+}
+
+group example.test {
+  num => 4
+  path => /path/to/ezmlm/test
+  mail => test@example.com
+  desc => Used for testing the mailing lists and news server
+  hidden
+}
