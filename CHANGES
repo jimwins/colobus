@@ -1,3 +1,14 @@
+0.8 (released july 10, 2001)
+ * added 'xhdr' (and 'xpat' and 'xrover') command support (required by leafnode)
+ * moved configuration into a configuration file
+ * implemented the 'newgroups' command
+ * added 'ihave' command support
+ * rewrite Message-ID headers to always have correct case
+ * fixed output of the 'help' command
+ * made the progress indicator for database updating prettier
+ * some general code cleanup
+
+
 0.7 (released july 8, 2001)
  * fixed error handling when num couldn't be opened
  * use first article to figure out group creation date
