@@ -7,6 +7,10 @@ timeout => 300
 # disallow specific nntp commands
 disallow => ihave,xindex
 
+# values to work with ezmlm archive and qmail instead of mlmmj and sendmail
+# archive_pat => "%02d/%d"
+# mailinject => /var/qmail/bin/qmail-inject -a
+
 # dsn for connecting to database
 dsn => DBI:mysql:database=colobus;host=localhost
 dbuser => colobus

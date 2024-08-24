@@ -26,20 +26,24 @@ use Symbol ();
 
 use Data::Dumper ();
 
-# setting this to qw(/usr/sbin/sendmail) should work, but DO NOT ADD -t!
-my (@mailinject) = qw(/var/qmail/bin/qmail-inject -a);
-
 my ($group,$current); # the current group and article number (state!)
 
 my %groups;
 my %config = (
   timeout    => 300,
   servername => 'news',
+  # ezmlm needs '%02d/%d', mlmmj just uses '%d%d'
+  archive_pat => '%d%d',
+  # qmail should be /var/qmail/bin/qmail-inject -a
+  # setting this to /usr/sbin/sendmail works, but DO NOT ADD -t!
+  mailinject => '/usr/bin/sendmail',
 );
 
 my $config = shift @ARGV || "config";
 
 read_config($config);
+
+my (@mailinject) = split / +/, $config{mailinject};
 
 my %groupsbyid;
 foreach (keys %groups) {
@@ -198,7 +202,7 @@ sub get_group_creation {
     or return;
   return unless exists $groups{$group};
   my ($artno) = get_group_minmax($group);
-  my $file = sprintf("%s/archive/%d/%02d", $groups{$group}->{path},
+  my $file = sprintf("%s/archive/$config{archive_pat}", $groups{$group}->{path},
                      int $artno / 100, $artno % 100);
   return (stat($file))[9];
 }
@@ -213,7 +217,7 @@ sub open_article {
   my ($group,$artno) = @_;
   return unless exists $groups{$group};
   my $fh = Symbol::gensym();
-  my $file = sprintf("%s/archive/%d/%02d", $groups{$group}->{path},
+  my $file = sprintf("%s/archive/$config{archive_pat}", $groups{$group}->{path},
                      int $artno / 100, $artno % 100);
   open $fh, "<$file"
     or return;

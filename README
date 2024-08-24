@@ -1,5 +1,5 @@
 colobus is an nntp server, written in perl, that provides access to
-mail archives in the ezmlm archive format.
+mail archives in the ezmlm or mlmmj archive format.
 
 basic installation instructions can be found in the INSTALL file.
 
