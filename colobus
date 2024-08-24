@@ -32,8 +32,8 @@ my %groups;
 my %config = (
   timeout    => 300,
   servername => 'news',
-  # ezmlm needs '%02d/%d', mlmmj just uses '%d%d'
-  archive_pat => '%d%d',
+  # ezmlm needs '%02d/%d', mlmmj uses '%3$d'
+  archive_pat => '%3$d',
   # qmail should be /var/qmail/bin/qmail-inject -a
   # setting this to /usr/sbin/sendmail works, but DO NOT ADD -t!
   mailinject => '/usr/bin/sendmail',
@@ -218,7 +218,7 @@ sub get_group_creation {
   return unless exists $groups{$group};
   my ($artno) = get_group_minmax($group);
   my $file = sprintf("%s/archive/$config{archive_pat}", $groups{$group}->{path},
-                     int $artno / 100, $artno % 100);
+                     int $artno / 100, $artno % 100, $artno);
   return (stat($file))[9];
 }
 
@@ -233,7 +233,7 @@ sub open_article {
   return unless exists $groups{$group};
   my $fh = Symbol::gensym();
   my $file = sprintf("%s/archive/$config{archive_pat}", $groups{$group}->{path},
-                     int $artno / 100, $artno % 100);
+                     int $artno / 100, $artno % 100, $artno);
   open $fh, "<$file"
     or return;
   return $fh;
