@@ -1,4 +1,6 @@
 ?.? (not released yet)
+ * added support for a new 'xthread id_or_msgid' command to get overview
+   (a la 'xover') for the thread that a message is in
  * support configuration of archive_pat and mailinject to support either
    ezmlm or mlmmj (defaults now favor mlmmj)
  * tweak table structure to improve performance of imports and threading

@@ -81,7 +81,7 @@ sub read_config {
 # these are the commands we understand, so far
 my (@commands) = qw(article body date group head help ihave last list
                     listgroup mode next newgroups newnews post quit slave
-                    stat xgtitle xhdr xover xpat xpath xrover xversion);
+                    stat xgtitle xhdr xover xpat xpath xrover xthread xversion);
 my (%commands); @commands{@commands} = ('') x @commands;
 if ($config{disallow}) {
   foreach (map { s/^\s*(.+?)\s*$/$1/; $_; } split /,/, $config{disallow}) {
@@ -109,6 +109,21 @@ SELECT h_subject AS `Subject`, h_from AS `From`, h_date AS `Date`,
 END
 
 my $xover_sth = $dbh->prepare($query)
+  or die($DBI::errstr);
+
+my $thread_query = <<END;
+SELECT h_subject AS `Subject`, h_from AS `From`, h_date AS `Date`,
+       h_messageid AS `Message-ID`,
+       h_references AS `References`,
+       h_lines AS `Lines`,
+       msgid,
+       art
+  FROM header
+ WHERE grp = ? AND thread = ?
+ ORDER BY art
+END
+
+my $xover_thread_sth = $dbh->prepare($thread_query)
   or die($DBI::errstr);
 
 $SIG{ALRM} = sub { exit; };
@@ -232,8 +247,25 @@ sub get_article_xover {
   $xover_sth->execute($grp, $begin, $end || $begin)
     or return;
 
+  return article_xover_results($group, $xover_sth);
+}
+
+sub get_article_xover_thread {
+  my ($group,$thread) = @_;
+  my $grp = $groups{$group}->{'num'}
+    or return;
+
+  $xover_thread_sth->execute($grp, $thread)
+    or return;
+
+  return article_xover_results($group, $xover_thread_sth);
+}
+
+sub article_xover_results {
+  my ($group, $sth) = @_;
+
   my @xover;
-  while (my $xover = $xover_sth->fetchrow_hashref) {
+  while (my $xover = $sth->fetchrow_hashref) {
     my $msgid = get_article_message_id_from_xover($group,$xover);
     # generate xref and newsgroups info
     my $query = qq{SELECT grp,art FROM header WHERE msgid = ?};
@@ -838,6 +870,48 @@ sub xpath {
     respond(501, "invalid msgid");
   }
 
+}
+
+sub xthread {
+  my ($which) = @_;
+  my ($id, $ggg); # message-id, group derived from message-id
+
+  $which ||= $current; # use the current article if none was specified
+
+  # handle specification by message-id
+  if ($which && $which =~ m/^<(.+?)>$/) {
+    $id = $1;
+    ($ggg,$which) = get_group_and_article($id);
+    unless ($ggg) {
+      note("/msgid/$id", "GET", 404);
+      return respond(430, "no such article found");
+    }
+  }
+
+  my ($thread) = $dbh->selectrow_array(
+    qq{SELECT thread FROM header WHERE grp = ? AND art = ?},
+    undef,
+    $groups{$ggg || $group}->{num},
+    $which
+  );
+  unless ($thread) {
+    note("/".($ggg||$group)."/$which", "GET", 404);
+    return respond($ggg ? 430 : 423, "no thread for article found");
+  }
+
+  respond(224, "overview information follows for thread");
+  alarm $config{timeout};
+  my (@xover) = get_article_xover_thread($group, $thread);
+  foreach my $xover (@xover) {
+    print $xover->{'art'};
+    foreach my $header (@overview) {
+      print "\t", ($xover->{$header} || "");
+    }
+    print "\tXref: ", ($xover->{xref} || "");
+    print "\r\n";
+  }
+  note("/$group?t=thread");
+  dot();
 }
 
 sub xversion {
