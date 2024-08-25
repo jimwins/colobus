@@ -32,8 +32,8 @@ my %groups;
 my %config = (
   timeout    => 300,
   servername => 'news',
-  # ezmlm needs '%02d/%d', mlmmj uses '%3$d'
-  archive_pat => '%3$d',
+  # ezmlm needs '%02d/%d', mlmmj uses '%4$d'
+  archive_pat => '%4$d',
   # qmail should be /var/qmail/bin/qmail-inject -a
   # setting this to /usr/sbin/sendmail works, but DO NOT ADD -t!
   mailinject => '/usr/bin/sendmail',
