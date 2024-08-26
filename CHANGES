@@ -1,4 +1,5 @@
 ?.? (not released yet)
+ * add -r flag to colobus-archive to reindex lists
  * fix unfolding of headers in colobus-archive (yoinked from perl's
    fork of colobus, fix by Robert Spier)
  * added support for a new 'xthread id_or_msgid' command to get overview

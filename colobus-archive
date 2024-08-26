@@ -23,11 +23,12 @@ my %config = (
 $| = 1;
 
 my $config = "config";
-my $all;
+my ($all, $reindex);
 GetOptions(
   "a|all!" => \$all,
   "c|config=s"   => \$config,
   "d|debug!"   => \$TRACE,
+  "r|reindex!"   => \$reindex,
 );
 
 read_config($config);
@@ -61,7 +62,7 @@ sub read_config {
 
 @ARGV = sort keys %groups if $all;
 
-die "usage: $0 [-a] [-c config] group ...\n" unless @ARGV;
+die "usage: $0 [-a] [-c config] [-r] group ...\n" unless @ARGV;
 
 # these are the headers we track for the overview database
 my (@overview) = qw(Subject From Date Message-ID References In-Reply-To Lines);
@@ -87,6 +88,19 @@ INSERT INTO header SET
   h_subject = ?,
   h_references = ?,
   h_lines = ?
+  ON DUPLICATE KEY UPDATE SET
+  msgid = VALUES(msgid),
+  subjhash = VALUES(subjhash),
+  fromhash = VALUES(fromhash),
+  thread = VALUES(thread),
+  parent = VALUES(parent),
+  received = VALUES(received),
+  h_date = VALUES(h_date),
+  h_messageid = VALUES(h_messageid),
+  h_from = VALUES(h_from),
+  h_subject = VALUES(h_subject),
+  h_references = VALUES(h_references),
+  h_lines = VALUES(h_lines)
 QUERY
 
 for $group (@ARGV) {
@@ -95,13 +109,18 @@ for $group (@ARGV) {
 
   print "$group: " if $TRACE;
 
-  my ($indexed) = $dbh->selectrow_array("SELECT MAX(art) FROM header WHERE grp = ?", undef, $grp) || 0;
-
   my $numfile = $groups{$group}->{'path'}."/".$config{'numfile'};
   open NUM, '<', $numfile
     or die "unable to open num file '$numfile': $!";
   my ($latest) = (split ':', scalar <NUM>)[0];
   close NUM;
+
+  my ($indexed);
+  if ($reindex) {
+    $indexed = 0;
+  } else {
+    $indexed = $dbh->selectrow_array("SELECT MAX(art) FROM header WHERE grp = ?", undef, $grp) || 0;
+  }
 
   for my $num ($indexed + 1 .. $latest) {
     print "." if $TRACE and not $num % 100;
