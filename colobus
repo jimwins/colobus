@@ -9,7 +9,7 @@ $| = 1;
 # or inetd if you're into that sort of thing
 
 package Colobus;
-$Colobus::VERSION = "2.1";
+$Colobus::VERSION = "2.2";
 
 my $TRACE = $ENV{TRACE};
 
