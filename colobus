@@ -37,6 +37,8 @@ my %config = (
   # qmail should be /var/qmail/bin/qmail-inject -a
   # setting this to /usr/sbin/sendmail works, but DO NOT ADD -t!
   mailinject => '/usr/bin/sendmail',
+  # ezmlm called this num, mlmmj calls it index
+  numfile => 'index',
 );
 
 my $config = shift @ARGV || "config";

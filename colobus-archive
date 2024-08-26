@@ -17,6 +17,7 @@ my %groups;
 my %config = (
   timeout    => 300,
   servername => 'news',
+  numfile => 'index',
 );
 
 $| = 1;
@@ -96,8 +97,9 @@ for $group (@ARGV) {
 
   my ($indexed) = $dbh->selectrow_array("SELECT MAX(art) FROM header WHERE grp = ?", undef, $grp) || 0;
 
-  open NUM, '<', $groups{$group}->{'path'}."/num"
-    or die "unable to open num file: $!";
+  my $numfile = $groups{$group}->{'path'}."/".$config{'numfile'};
+  open NUM, '<', $numfile
+    or die "unable to open num file '$numfile': $!";
   my ($latest) = (split ':', scalar <NUM>)[0];
   close NUM;
 
