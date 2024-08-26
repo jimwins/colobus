@@ -1,4 +1,6 @@
 ?.? (not released yet)
+ * fix unfolding of headers in colobus-archive (yoinked from perl's
+   fork of colobus, fix by Robert Spier)
  * added support for a new 'xthread id_or_msgid' command to get overview
    (a la 'xover') for the thread that a message is in
  * support configuration of archive_pat and mailinject to support either
