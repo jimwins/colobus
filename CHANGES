@@ -1,3 +1,6 @@
+2.4 (released august 27, 2024)
+ * actually fixed re-indexing in colobus-archive
+
 2.3 (released august 27, 2024)
  * fixed handling of mlmmj format in colobus-archive
 

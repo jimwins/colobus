@@ -89,7 +89,7 @@ INSERT INTO header SET
   h_subject = ?,
   h_references = ?,
   h_lines = ?
-  ON DUPLICATE KEY UPDATE SET
+  ON DUPLICATE KEY UPDATE
   msgid = VALUES(msgid),
   subjhash = VALUES(subjhash),
   fromhash = VALUES(fromhash),
