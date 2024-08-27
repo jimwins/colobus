@@ -1,3 +1,6 @@
+2.3 (released august 27, 2024)
+ * fixed handling of mlmmj format in colobus-archive
+
 2.2 (released august 26, 2024)
  * allow arguments for colobus to be passed to run script
  * add -r flag to colobus-archive to reindex lists

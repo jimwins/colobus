@@ -17,6 +17,7 @@ my %groups;
 my %config = (
   timeout    => 300,
   servername => 'news',
+  archive_pat => '%4$d',
   numfile => 'index',
 );
 
@@ -177,8 +178,8 @@ sub open_article {
   my ($group,$artno) = @_;
   return unless exists $groups{$group};
   my $fh = Symbol::gensym();
-  my $file = sprintf("%s/archive/%d/%02d", $groups{$group}->{path},
-                     int $artno / 100, $artno % 100);
+  my $file = sprintf("%s/archive/$config{archive_pat}", $groups{$group}->{path},
+                     int $artno / 100, $artno % 100, $artno);
   open $fh, "<$file"
     or return;
   return $fh;
