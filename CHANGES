@@ -1,3 +1,6 @@
+2.x (not released)
+ * fix unfolding of multi-line headers to not lose whitespace
+
 2.4 (released august 27, 2024)
  * actually fixed re-indexing in colobus-archive
 

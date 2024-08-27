@@ -201,7 +201,11 @@ LINE:
     last if $body and $xover{Lines};
     $lines++ if $body;
     unless ($body) {
-      if ($lastheader && ($line =~ m/^\s+(.+?)\r?\n/is)) {
+      # "unfolding" a header means removing CRLF (but since our archives may
+      # be stored Unix-style, we also do just LF) if it is followed by whitespace,
+      # but preserving that whitespace
+      if ($lastheader && ($line =~ m/^(\s.+?)\r?\n/is)) {
+        # we also just turn all whitespace into spaces to avoid problems
 	($xover{$lastheader} .= $1) =~ s/\s/ /g;
 	next;
       }
