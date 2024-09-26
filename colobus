@@ -36,7 +36,7 @@ my %config = (
   archive_pat => '%4$d',
   # qmail should be /var/qmail/bin/qmail-inject -a
   # setting this to /usr/sbin/sendmail works, but DO NOT ADD -t!
-  mailinject => '/usr/bin/sendmail',
+  mailinject => '/usr/sbin/sendmail',
   # ezmlm called this num, mlmmj calls it index
   numfile => 'index',
 );
@@ -394,7 +394,7 @@ sub incoming {
   alarm 0;
 
   close FILE
-    or return respond($ihave ? 436 : 441, "posting failed -- qmail barfed!");
+    or return respond($ihave ? 436 : 441, "posting failed -- mail inject barfed!");
 
   foreach (@newsgroups) {
     note("/$_/new", "PUT", 200, $bytes);
