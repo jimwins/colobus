@@ -238,5 +238,12 @@ LINE:
   else {
     $xover{From} = "bogus\@$config{servername} (Unknown Sender)";
   }
+
+  # Trim leading spaces which may have crept in if the leading 'Header: ' was
+  # immediately followed by a folded line
+  foreach my $header (keys %xover) {
+    $xover{$header} =~ s/^\s+// if defined $xover{$header};
+  }
+
   return \%xover;
 }
