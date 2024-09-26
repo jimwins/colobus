@@ -582,7 +582,7 @@ sub last {
 }
 
 sub list {
-  my ($list) = lc shift || "active";
+  my ($list) = lc (shift || "active");
   my ($match) = shift;
 
   if ($list eq 'active') {
@@ -866,12 +866,12 @@ sub xpath {
   my $id = shift;
   if ($id && $id =~ m/^<(.+?)>$/) {
     my ($ggg,$begin) = get_group_and_article($1);
-    respond(223, "$ggg/$begin");
+    if ($ggg) {
+      respond(223, "$ggg/$begin");
+      return;
+    }
   }
-  else {
-    respond(501, "invalid msgid");
-  }
-
+  respond(430, "no such article on server");
 }
 
 sub xthread {
