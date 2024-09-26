@@ -1,5 +1,6 @@
-2.x (not released)
+2.5 (released september 26, 2024)
  * fix unfolding of multi-line headers to not lose whitespace
+ * fix XPATH response when message is not found
 
 2.4 (released august 27, 2024)
  * actually fixed re-indexing in colobus-archive
