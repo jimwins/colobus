@@ -1,9 +1,3 @@
--- MySQL dump 9.09
---
--- Host: localhost    Database: colobus
--- ------------------------------------------------------
--- Server version	4.0.16-standard-log
-
 --
 -- Table structure for table `header`
 --
@@ -32,5 +26,4 @@ CREATE TABLE header (
   KEY grp_2 (grp,thread,parent),
   KEY grp_3 (grp,subjhash),
   KEY subjhash (subjhash,received)
-) TYPE=MyISAM DELAY_KEY_WRITE=1;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
