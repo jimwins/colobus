@@ -1,2 +1,11 @@
 #!/bin/sh
-exec tcpserver -HR -u 65534 -g 65534 0 119 ./colobus "$@" 2>&1
+
+if [ "${COLOBUS_USER}" = "" ]; then
+    uid=65534
+    gid=65534
+else
+    uid=$(id -u "${COLOBUS_USER}")
+    gid=$(id -g "${COLOBUS_USER}")
+fi
+
+exec tcpserver -HR -u ${uid} -g ${gid} 0 119 ./colobus "$@" 2>&1
